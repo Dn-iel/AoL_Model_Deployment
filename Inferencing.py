@@ -33,8 +33,11 @@ columns_to_show = [
 
 # Load model dan data
 model_data = load_model_from_drive()
-netflix_title_series = model_data["netflix_title"]  # Series of titles
+netflix_title_series = model_data["netflix_title"]
+indices = model_data["indices"]
+cosine_similarities = model_data["cosine_similarities"]
 content_recommender = model_data["content_recommender"]
+
 
 full_df = load_full_dataset()
 
