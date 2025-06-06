@@ -7,7 +7,7 @@ import pandas as pd
 # Load model dari Google Drive
 @st.cache_resource
 def load_model_from_drive():
-    file_id = "1uARTcSmf--15RMbvBxwP7TJFONlISYvK"  # Ganti jika upload ulang ke Drive baru
+    file_id = "1uARTcSmf--15RMbvBxwP7TJFONlISYvK"  # Ganti jika simpan ulang
     output_path = "recommender_model.pkl"
 
     if not os.path.exists(output_path):
@@ -17,8 +17,9 @@ def load_model_from_drive():
     with open(output_path, "rb") as f:
         model_data = pickle.load(f)
 
-    # Inject ke global scope supaya content_recommender bisa akses variabel yang dibutuhkan
-    globals().update(model_data)
+    # Inject semua variabel ke global scope
+    for key, value in model_data.items():
+        globals()[key] = value
 
     return model_data
 
@@ -38,7 +39,7 @@ columns_to_show = [
 # Load model dan data
 model_data = load_model_from_drive()
 netflix_title_series = model_data["netflix_title"]
-content_recommender = model_data["content_recommender"]
+content_recommender = model_data["content_recommender"]  # Fungsi dari pickle
 
 full_df = load_full_dataset()
 
