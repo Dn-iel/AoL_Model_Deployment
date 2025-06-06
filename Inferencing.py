@@ -1,23 +1,26 @@
 import streamlit as st
-import dill as pickle  # or use 'import pickle' if not using functions
+import requests
+import dill as pickle
+import io
 
 @st.cache_resource
-def load_recommender():
-    with open("recommender_model.pkl", "rb") as f:
+def load_model_from_drive():
+    url = "https://drive.google.com/uc?export=download&id=1qBFI1hvBwzKDf4630MIebcjbVm-9U7df"
+    response = requests.get(url)
+    with io.BytesIO(response.content) as f:
         return pickle.load(f)
 
-# Load the model
-recommender_data = load_recommender()
+# Load model
+model_data = load_model_from_drive()
 
-# Unpack the components
-cosine_similarities = recommender_data["cosine_similarities"]
-indices = recommender_data["indices"]
-netflix_title = recommender_data["netflix_title"]
-content_recommender = recommender_data["content_recommender"]
+# Unpack komponen jika disimpan sebagai dict
+cosine_similarities = model_data["cosine_similarities"]
+indices = model_data["indices"]
+netflix_title = model_data["netflix_title"]
+content_recommender = model_data["content_recommender"]
 
-# Example usage in Streamlit
+# Streamlit UI
 st.title("Netflix Recommender System")
-
 title = st.text_input("Enter a movie title")
 
 if title:
