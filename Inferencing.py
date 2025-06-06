@@ -31,21 +31,20 @@ search_clicked = st.button("Get Recommended Movies")  # Tombol SELALU muncul
 
 if search_clicked and title:
     if title in indices:
-        index = indices[title]
-        movie_details = netflix_df.loc[index]
+    index = indices[title]
+    movie_details_df = netflix_df.loc[[index]]  # Ini hasilnya pasti DataFrame
+    st.subheader("🎥 Selected Movie Details")
+    st.table(movie_details_df)
 
-        st.subheader("🎥 Selected Movie Details")
-        st.table(movie_details.to_frame().T)
-
-        st.subheader("📺 Recommended Titles with Details:")
-        recommendations = content_recommender(title)
+    st.subheader("📺 Recommended Titles with Details:")
+    recommendations = content_recommender(title)
 
         for i, rec_title in enumerate(recommendations, 1):
             with st.expander(f"{i}. {rec_title}"):
                 if rec_title in indices:
                     rec_index = indices[rec_title]
-                    rec_details = netflix_df.loc[rec_index]
-                    st.table(rec_details.to_frame().T)
+                    rec_details_df = netflix_df.loc[[rec_index]]
+                    st.table(rec_details_df)
                 else:
                     st.warning(f"Details for '{rec_title}' not found.")
     else:
