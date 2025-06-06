@@ -20,19 +20,20 @@ def load_model_from_drive():
 # Load dataset lengkap dari CSV
 @st.cache_data
 def load_full_dataset():
-    df = pd.read_csv("netflix_titles.csv")  # Ganti path jika perlu
+    df = pd.read_csv("netflix_preprocessed.csv")  # Ganti path jika perlu
     return df
+
 
 # Kolom yang akan ditampilkan
 columns_to_show = [
     'type', 'title', 'director', 'cast', 'country', 'date_added',
     'release_year', 'rating', 'listed_in', 'description',
-    'duration_minutes', 'duration_seasons'  # Pastikan kolom ini ada di dataset hasil preprocessing
+    'duration_minutes', 'duration_seasons'
 ]
 
 # Load model dan data
 model_data = load_model_from_drive()
-netflix_title_series = model_data["netflix_title"]
+netflix_title_series = model_data["netflix_title"]  # Series of titles
 content_recommender = model_data["content_recommender"]
 
 full_df = load_full_dataset()
@@ -45,6 +46,7 @@ title = st.text_input("Enter a movie title:")
 search_clicked = st.button("Get Recommended Movies")
 
 if search_clicked and title:
+    # Cek apakah title ada di netflix_title_series
     if title in set(netflix_title_series):
         # Ambil detail dari full_df
         movie_details_df = full_df[full_df['title'] == title][columns_to_show]
