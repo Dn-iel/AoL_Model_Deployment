@@ -7,7 +7,7 @@ import pandas as pd
 # Load model dari Google Drive
 @st.cache_resource
 def load_model_from_drive():
-    file_id = "1rWt2hKd8xTaOCaZRZH_mfzJLVfHRoJZa"  # ID file baru dari link yang kamu kasih
+    file_id = "1uARTcSmf--15RMbvBxwP7TJFONlISYvK"
     output_path = "recommender_model.pkl"
 
     if not os.path.exists(output_path):
@@ -15,31 +15,25 @@ def load_model_from_drive():
         gdown.download(url, output_path, quiet=False)
 
     with open(output_path, "rb") as f:
-        model_data = pickle.load(f)
-
-    return model_data
+        return pickle.load(f)
 
 # Load dataset lengkap dari CSV
 @st.cache_data
 def load_full_dataset():
-    df = pd.read_csv("netflix_preprocessed.csv")  # Ganti path jika perlu
+    df = pd.read_csv("netflix_titles.csv")  # Ganti path jika perlu
     return df
 
 # Kolom yang akan ditampilkan
 columns_to_show = [
     'type', 'title', 'director', 'cast', 'country', 'date_added',
     'release_year', 'rating', 'listed_in', 'description',
-    'duration_minutes', 'duration_seasons'
+    'duration_minutes', 'duration_seasons'  # Pastikan kolom ini ada di dataset hasil preprocessing
 ]
 
 # Load model dan data
 model_data = load_model_from_drive()
-
-# Assign variabel penting secara eksplisit supaya fungsi content_recommender bisa akses
-cosine_similarities = model_data['cosine_similarities']
-indices = model_data['indices']
-netflix_title_series = model_data['netflix_title']
-content_recommender = model_data['content_recommender']
+netflix_title_series = model_data["netflix_title"]
+content_recommender = model_data["content_recommender"]
 
 full_df = load_full_dataset()
 
@@ -52,7 +46,7 @@ search_clicked = st.button("Get Recommended Movies")
 
 if search_clicked and title:
     if title in set(netflix_title_series):
-        # Tampilkan detail film
+        # Ambil detail dari full_df
         movie_details_df = full_df[full_df['title'] == title][columns_to_show]
         if movie_details_df.empty:
             st.warning("Details not found in the full dataset.")
@@ -62,12 +56,7 @@ if search_clicked and title:
 
         # Rekomendasi
         st.subheader("📺 Recommended Titles with Details:")
-        try:
-            rec_series = content_recommender(title)
-            recommendations = rec_series.tolist()
-        except Exception as e:
-            st.error(f"⚠️ Error saat menghasilkan rekomendasi: {e}")
-            recommendations = []
+        recommendations = content_recommender(title)
 
         for i, rec_title in enumerate(recommendations, 1):
             with st.expander(f"{i}. {rec_title}"):
