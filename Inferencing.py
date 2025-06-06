@@ -23,6 +23,10 @@ def load_full_dataset():
     df = pd.read_csv("netflix_titles.csv")  # Ganti path jika perlu
     return df
 
+st.write("Columns in dataset:", full_df.columns.tolist())
+st.write("Requested columns:", columns_to_show)
+
+
 # Kolom yang akan ditampilkan
 columns_to_show = [
     'type', 'title', 'director', 'cast', 'country', 'date_added',
