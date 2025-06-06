@@ -63,7 +63,8 @@ if search_clicked and title:
         # Rekomendasi
         st.subheader("📺 Recommended Titles with Details:")
         try:
-            recommendations = content_recommender(title)
+            rec_series = content_recommender(title)
+            recommendations = rec_series.tolist()
         except Exception as e:
             st.error(f"⚠️ Error saat menghasilkan rekomendasi: {e}")
             recommendations = []
