@@ -23,9 +23,6 @@ def load_full_dataset():
     df = pd.read_csv("netflix_titles.csv")  # Ganti path jika perlu
     return df
 
-st.write("Columns in dataset:", full_df.columns.tolist())
-st.write("Requested columns:", columns_to_show)
-
 
 # Kolom yang akan ditampilkan
 columns_to_show = [
@@ -40,6 +37,10 @@ netflix_title_series = model_data["netflix_title"]  # Series of titles
 content_recommender = model_data["content_recommender"]
 
 full_df = load_full_dataset()
+
+
+st.write("Columns in dataset:", full_df.columns.tolist())
+st.write("Requested columns:", columns_to_show)
 
 # UI Streamlit
 st.title("🎬 Netflix Movie Recommender")
