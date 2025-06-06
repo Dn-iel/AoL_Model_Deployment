@@ -7,7 +7,7 @@ import pandas as pd
 # Load model dari Google Drive
 @st.cache_resource
 def load_model_from_drive():
-    file_id = "1uARTcSmf--15RMbvBxwP7TJFONlISYvK"
+    file_id = "1rWt2hKd8xTaOCaZRZH_mfzJLVfHRoJZa"  # ID file baru dari link yang kamu kasih
     output_path = "recommender_model.pkl"
 
     if not os.path.exists(output_path):
@@ -15,7 +15,9 @@ def load_model_from_drive():
         gdown.download(url, output_path, quiet=False)
 
     with open(output_path, "rb") as f:
-        return pickle.load(f)
+        model_data = pickle.load(f)
+
+    return model_data
 
 # Load dataset lengkap dari CSV
 @st.cache_data
