@@ -10,7 +10,9 @@ import dill as pickle
 
 @st.cache_resource
 def load_recommender():
-    with gzip.open("recommender_model.pkl.gz", "rb") as f:
+    url = "https://drive.google.com/uc?export=download&id=1qBFI1hvBwzKDf4630MIebcjbVm-9U7df"
+    response = requests.get(url)
+    with gzip.open(io.BytesIO(response.content), 'rb') as f:
         return pickle.load(f)
 
 def main():
