@@ -5,7 +5,7 @@ import os
 import pandas as pd
 
 # Load model dari Google Drive
-@st.cache_resource
+# @st.cache_resource
 def load_model_from_drive():
     file_id = "1uARTcSmf--15RMbvBxwP7TJFONlISYvK"
     output_path = "recommender_model.pkl"
@@ -18,7 +18,7 @@ def load_model_from_drive():
         return pickle.load(f)
 
 # Load dataset lengkap dari CSV
-@st.cache_data
+# @st.cache_data
 def load_full_dataset():
     df = pd.read_csv("netflix_preprocessed.csv")  # Ganti path jika perlu
     return df
