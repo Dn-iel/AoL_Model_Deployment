@@ -38,10 +38,6 @@ content_recommender = model_data["content_recommender"]
 
 full_df = load_full_dataset()
 
-
-st.write("Columns in dataset:", full_df.columns.tolist())
-st.write("Requested columns:", columns_to_show)
-
 # UI Streamlit
 st.title("🎬 Netflix Movie Recommender")
 st.markdown("Enter a Netflix movie title below to get detailed information and similar movie recommendations.")
