@@ -54,7 +54,7 @@ if search_clicked and title:
             st.warning("Details not found in the full dataset.")
         else:
             st.subheader("🎥 Selected Movie Details")
-            st.table(movie_details_df)
+            st.dataframe(movie_details_df, use_container_width=True)
 
         # Rekomendasi
         st.subheader("📺 Recommended Titles with Details:")
@@ -64,7 +64,7 @@ if search_clicked and title:
             with st.expander(f"{i}. {rec_title}"):
                 rec_details_df = full_df[full_df['title'] == rec_title][columns_to_show]
                 if not rec_details_df.empty:
-                    st.table(rec_details_df)
+                    st.dataframe(rec_details_df, use_container_width=True)
                 else:
                     st.warning(f"Details for '{rec_title}' not found.")
     else:
