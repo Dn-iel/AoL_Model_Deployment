@@ -40,6 +40,8 @@ columns_to_show = [
 model_data = load_model_from_drive()
 netflix_title_series = model_data["netflix_title"]
 content_recommender = model_data["content_recommender"]  # Fungsi dari pickle
+st.write(model_data.keys())
+
 
 full_df = load_full_dataset()
 
