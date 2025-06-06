@@ -8,9 +8,9 @@ import dill
 
 import dill as pickle
 
-# @st.cache_resource
+@st.cache_resource
 def load_recommender():
-    with open("recommender_model.pkl", "rb") as f:
+    with gzip.open("recommender_model.pkl.gz", "rb") as f:
         return pickle.load(f)
 
 def main():
