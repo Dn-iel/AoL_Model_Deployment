@@ -20,8 +20,9 @@ def load_model_from_drive():
 # Load dataset lengkap dari CSV
 @st.cache_data
 def load_full_dataset():
-    df = pd.read_csv("netflix_preprocessed.csv") 
+    df = pd.read_csv("netflix_preprocessed.csv")  # Ganti path jika perlu
     return df
+
 
 # Kolom yang akan ditampilkan
 columns_to_show = [
@@ -29,8 +30,6 @@ columns_to_show = [
     'release_year', 'rating', 'listed_in', 'description',
     'duration_minutes', 'duration_seasons'
 ]
-
-
 
 # Load model dan data
 model_data = load_model_from_drive()
@@ -40,13 +39,8 @@ content_recommender = model_data["content_recommender"]
 full_df = load_full_dataset()
 
 # UI Streamlit
-st.title("Netflix Movie Recommender")
-st.markdown("Enter a movie title below to get similar movie recommendations.")
-
-st.write("Keys in model:", model_data.keys())
-st.write("Type of content_recommender:", type(content_recommender))
-st.write("Is callable:", callable(content_recommender))
-
+st.title("🎬 Netflix Movie Recommender")
+st.markdown("Enter a Netflix movie title below to get detailed information and similar movie recommendations.")
 
 title = st.text_input("Enter a movie title:")
 search_clicked = st.button("Get Recommended Movies")
@@ -59,11 +53,11 @@ if search_clicked and title:
         if movie_details_df.empty:
             st.warning("Details not found in the full dataset.")
         else:
-            st.subheader("Selected Movie Details")
+            st.subheader("🎥 Selected Movie Details")
             st.dataframe(movie_details_df, use_container_width=True)
 
         # Rekomendasi
-        st.subheader("Recommended Movies:")
+        st.subheader("📺 Recommended Titles with Details:")
         recommendations = content_recommender(title)
 
         for i, rec_title in enumerate(recommendations, 1):
