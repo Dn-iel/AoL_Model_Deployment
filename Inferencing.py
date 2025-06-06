@@ -28,7 +28,7 @@ def load_full_dataset():
 columns_to_show = [
     'type', 'title', 'director', 'cast', 'country', 'date_added',
     'release_year', 'rating', 'listed_in', 'description',
-    'duration_minutes', 'duration_seasons'
+    'duration'
 ]
 
 # Load model dan data
