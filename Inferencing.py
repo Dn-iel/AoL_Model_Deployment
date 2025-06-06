@@ -17,13 +17,13 @@ def load_model_from_drive():
     with open(output_path, "rb") as f:
         return pickle.load(f)
 
-# Load dataset lengkap (harus sama dengan yang dipakai saat training)
+# Load dataset lengkap dari CSV
 @st.cache_data
 def load_full_dataset():
-    df = pd.read_csv("netflix_titles.csv")  # Ganti path ini jika perlu
+    df = pd.read_csv("netflix_titles.csv")  # Ganti path jika perlu
     return df
 
-# Kolom yang ingin ditampilkan
+# Kolom yang akan ditampilkan
 columns_to_show = [
     'type', 'title', 'director', 'cast', 'country', 'date_added',
     'release_year', 'rating', 'listed_in', 'description',
@@ -32,8 +32,7 @@ columns_to_show = [
 
 # Load model dan data
 model_data = load_model_from_drive()
-cosine_similarities = model_data["cosine_similarities"]
-indices = model_data["indices"]
+netflix_title_series = model_data["netflix_title"]  # Series of titles
 content_recommender = model_data["content_recommender"]
 
 full_df = load_full_dataset()
@@ -46,8 +45,9 @@ title = st.text_input("Enter a movie title:")
 search_clicked = st.button("Get Recommended Movies")
 
 if search_clicked and title:
-    # Cek apakah judul ada di indeks model
-    if title in indices:
+    # Cek apakah title ada di netflix_title_series
+    if title in set(netflix_title_series):
+        # Ambil detail dari full_df
         movie_details_df = full_df[full_df['title'] == title][columns_to_show]
         if movie_details_df.empty:
             st.warning("Details not found in the full dataset.")
@@ -55,7 +55,7 @@ if search_clicked and title:
             st.subheader("🎥 Selected Movie Details")
             st.table(movie_details_df)
 
-        # Tampilkan rekomendasi
+        # Rekomendasi
         st.subheader("📺 Recommended Titles with Details:")
         recommendations = content_recommender(title)
 
@@ -67,4 +67,4 @@ if search_clicked and title:
                 else:
                     st.warning(f"Details for '{rec_title}' not found.")
     else:
-        st.error("❌ Movie title not found in model index.")
+        st.error("❌ Movie title not found in model title list.")
