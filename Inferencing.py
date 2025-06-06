@@ -20,7 +20,7 @@ def load_model_from_drive():
 # Load dataset lengkap dari CSV
 @st.cache_data
 def load_full_dataset():
-    df = pd.read_csv("netflix_titles.csv")  # Ganti path jika perlu
+    df = pd.read_csv("netflix_preprcessed.csv")  # Ganti path jika perlu
     return df
 
 
@@ -28,7 +28,7 @@ def load_full_dataset():
 columns_to_show = [
     'type', 'title', 'director', 'cast', 'country', 'date_added',
     'release_year', 'rating', 'listed_in', 'description',
-    'duration'
+    'duration_minutes', 'duration_seasons'
 ]
 
 # Load model dan data
