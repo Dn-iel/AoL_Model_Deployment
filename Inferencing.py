@@ -1,25 +1,30 @@
 import streamlit as st
-import requests
 import dill as pickle
-import io
+import gdown
+import os
 
 @st.cache_resource
 def load_model_from_drive():
-    url = "https://drive.google.com/uc?export=download&id=1qBFI1hvBwzKDf4630MIebcjbVm-9U7df"
-    response = requests.get(url)
-    with io.BytesIO(response.content) as f:
+    file_id = "1qBFI1hvBwzKDf4630MIebcjbVm-9U7df"
+    output_path = "recommender_model.pkl"
+
+    if not os.path.exists(output_path):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, output_path, quiet=False)
+
+    with open(output_path, "rb") as f:
         return pickle.load(f)
 
 # Load model
 model_data = load_model_from_drive()
 
-# Unpack komponen jika disimpan sebagai dict
+# Unpack
 cosine_similarities = model_data["cosine_similarities"]
 indices = model_data["indices"]
 netflix_title = model_data["netflix_title"]
 content_recommender = model_data["content_recommender"]
 
-# Streamlit UI
+# UI
 st.title("Netflix Recommender System")
 title = st.text_input("Enter a movie title")
 
