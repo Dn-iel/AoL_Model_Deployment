@@ -30,6 +30,8 @@ columns_to_show = [
     'duration_minutes', 'duration_seasons'
 ]
 
+
+
 # Load model dan data
 model_data = load_model_from_drive()
 netflix_title_series = model_data["netflix_title"]  # Series of titles
@@ -40,6 +42,11 @@ full_df = load_full_dataset()
 # UI Streamlit
 st.title("Netflix Movie Recommender")
 st.markdown("Enter a movie title below to get similar movie recommendations.")
+
+st.write("Keys in model:", model_data.keys())
+st.write("Type of content_recommender:", type(content_recommender))
+st.write("Is callable:", callable(content_recommender))
+
 
 title = st.text_input("Enter a movie title:")
 search_clicked = st.button("Get Recommended Movies")
