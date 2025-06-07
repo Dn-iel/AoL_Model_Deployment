@@ -76,6 +76,7 @@ def main():
                 indices,
                 full_df
             )
+            st.table(recommendations)
 
             # for i, rec_title in enumerate(recommendations, 1):
             #     with st.expander(f"{i}. {rec_title}"):
