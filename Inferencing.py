@@ -50,9 +50,7 @@ indices = similarity_data.get("indices")
 netflix_title = similarity_data.get("netflix_title")
 
 columns_to_show = [
-    'type', 'title', 'director', 'cast', 'country', 'date_added',
-    'release_year', 'rating', 'listed_in', 'description',
-    'duration_minutes', 'duration_seasons'
+    'title', 'rating', 'listed_in', 'description'
 ]
 
 # === STREAMLIT UI ===
