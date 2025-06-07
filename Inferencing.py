@@ -17,13 +17,12 @@ def load_model_from_drive():
     with open(output_path, "rb") as f:
         return pickle.load(f)
 
-# Load dataset lengkap dari CSV
+# Load dataset setelah proses preprocessing
 @st.cache_data
 def load_full_dataset():
-    df = pd.read_csv("netflix_preprocessed.csv")  # Ganti path jika perlu
+    df = pd.read_csv("netflix_preprocessed.csv")
     return df
 
-# Fungsi rekomendasi manual
 def content_recommender(title, cosine_similarities, indices, df, top_n=5):
     if title not in indices:
         return []
@@ -38,7 +37,6 @@ def content_recommender(title, cosine_similarities, indices, df, top_n=5):
     return df.iloc[recommended_indices][displayed_column]
 
 
-# Kolom yang akan ditampilkan
 columns_to_show = ['title', 'listed_in', 'description', 'rating']
 
 def main():
@@ -50,7 +48,6 @@ def main():
 
     full_df = load_full_dataset()
 
-    # UI Streamlit
     st.title("Netflix Movie Recommender")
     st.markdown("Enter a Netflix movie title below to get similar movie recommendations.")
 
@@ -86,6 +83,5 @@ def main():
         else:
             st.error("❌ Movie title not found in model title list.")
 
-# Panggil main jika dijalankan sebagai skrip
 if __name__ == "__main__":
     main()
