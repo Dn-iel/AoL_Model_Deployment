@@ -7,42 +7,32 @@ import pandas as pd
 # === CONFIG ===
 RECOMMENDER_FILE_ID = "1jKQWQFiLUmUKvUaBJ4-Pv9ePbvrpHUik"
 SIMILARITY_FILE_ID = "1OsVzLeh7w4b7mKK0PgHJl1hXB8k6u4GO"
-# DATASET_PATH = "netflix_preprocessed.csv"  # Ganti jika perlu
+DATASET_PATH = "netflix_preprocessed.csv"  # Ganti jika perlu
 
 # === DOWNLOAD & LOAD PICKLES ===
-
-def load_function(path, id):
-    output_path = path
+@st.cache_resource
+def load_recommender_function():
+    output_path = "recommender_function.pkl"
     if not os.path.exists(output_path):
-        url = f"https://drive.google.com/uc?id={id}"
+        url = f"https://drive.google.com/uc?id={RECOMMENDER_FILE_ID}"
         gdown.download(url, output_path, quiet=False)
     return joblib.load(output_path)
-    
-# @st.cache_resource
-# def load_recommender_function():
-#     output_path = "recommender_function.pkl"
-#     if not os.path.exists(output_path):
-#         url = f"https://drive.google.com/uc?id={RECOMMENDER_FILE_ID}"
-#         gdown.download(url, output_path, quiet=False)
-#     return joblib.load(output_path)
 
-# @st.cache_resource
-# def load_similarity_data():
-#     output_path = "similarity_data.pkl"
-#     if not os.path.exists(output_path):
-#         url = f"https://drive.google.com/uc?id={SIMILARITY_FILE_ID}"
-#         gdown.download(url, output_path, quiet=False)
-#     return joblib.load(output_path)
+@st.cache_resource
+def load_similarity_data():
+    output_path = "similarity_data.pkl"
+    if not os.path.exists(output_path):
+        url = f"https://drive.google.com/uc?id={SIMILARITY_FILE_ID}"
+        gdown.download(url, output_path, quiet=False)
+    return joblib.load(output_path)
 
 @st.cache_data
 def load_full_dataset():
-    return pd.read_csv("netflix_preprocessed.csv")
+    return pd.read_csv(DATASET_PATH)
 
 # === LOAD MODELS & DATA ===
-content_recommender = load_function("recommender_function.pkl", "1jKQWQFiLUmUKvUaBJ4-Pv9ePbvrpHUik" )
-similarity_data = load_function("similarity_data.pkl", "1OsVzLeh7w4b7mKK0PgHJl1hXB8k6u4GO" )
-# content_recommender = load_recommender_function()
-# similarity_data = load_similarity_data()
+content_recommender = load_recommender_function()
+similarity_data = load_similarity_data()
 full_df = load_full_dataset()
 
 cosine_similarities = similarity_data.get("cosine_similarities")
