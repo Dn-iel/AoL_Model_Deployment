@@ -1,18 +1,18 @@
 import streamlit as st
-import joblib  # Ganti dari dill ke joblib
+import joblib
 import gdown
 import os
 import pandas as pd
 
 # === CONFIG ===
-RECOMMENDER_FILE_ID = "1jKQWQFiLUmUKvUaBJ4-Pv9ePbvrpHUik"
-SIMILARITY_FILE_ID = "1OsVzLeh7w4b7mKK0PgHJl1hXB8k6u4GO"
-DATASET_PATH = "netflix_preprocessed.csv"  # Ganti jika perlu
+RECOMMENDER_FILE_ID = "1_nrAO1xH_RfSjhWMYMXM8HmnSxgU2bt1"  # perbarui jika perlu
+SIMILARITY_FILE_ID = "1LFwFkzQtrebYr5jjWphkUkFyGnl3EjOw"    # perbarui jika perlu
+DATASET_PATH = "netflix_preprocessed.csv"
 
 # === DOWNLOAD & LOAD PICKLES ===
 @st.cache_resource
 def load_recommender_function():
-    output_path = "recommender_function.pkl"
+    output_path = "recommender.pkl"
     if not os.path.exists(output_path):
         url = f"https://drive.google.com/uc?id={RECOMMENDER_FILE_ID}"
         gdown.download(url, output_path, quiet=False)
@@ -20,7 +20,7 @@ def load_recommender_function():
 
 @st.cache_resource
 def load_similarity_data():
-    output_path = "similarity_data.pkl"
+    output_path = "data_similarity.pkl"
     if not os.path.exists(output_path):
         url = f"https://drive.google.com/uc?id={SIMILARITY_FILE_ID}"
         gdown.download(url, output_path, quiet=False)
@@ -54,7 +54,7 @@ search_clicked = st.button("Get Recommended Movies")
 
 if search_clicked and title:
     if title in set(netflix_title):
-        # Movie details
+        # Show selected movie details
         movie_details_df = full_df[full_df['title'] == title][columns_to_show]
         if movie_details_df.empty:
             st.warning("Details not found in the full dataset.")
@@ -62,10 +62,11 @@ if search_clicked and title:
             st.subheader("Selected Movie Details")
             st.dataframe(movie_details_df, use_container_width=True)
 
-        # Recommendations
+        # Show recommendations
         st.subheader("Recommended Titles:")
         try:
-            recommendations = content_recommender(title)  # Ganti jika perlu argumen tambahan
+            # Panggil fungsi rekomendasi dengan parameter lengkap
+            recommendations = content_recommender(title, cosine_similarities, indices)
             for i, rec_title in enumerate(recommendations, 1):
                 with st.expander(f"{i}. {rec_title}"):
                     rec_details_df = full_df[full_df['title'] == rec_title][columns_to_show]
