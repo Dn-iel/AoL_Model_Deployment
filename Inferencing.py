@@ -76,33 +76,13 @@ def main():
                 indices,
                 full_df
             )
-            # for _, row in recommendations.iterrows():
-            #     with st.expander(f"🎬 {row['title']}"):
-            #         st.markdown(f"""
-            #         Genre: {row['listed_in']}  
-            #         Rating: {row['rating']}  
-            #         Description: {row['description']}
-            #         """)
             for _, row in recommendations.iterrows():
-                st.markdown(
-                    f"""
-                    <div style="background-color: #f9f9f9; padding: 16px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
-                        <h4 style="margin-bottom: 6px;">🎬 {row['title']}</h4>
-                        <p><strong>Genre:</strong> {row['listed_in']}</p>
-                        <p><strong>Rating:</strong> {row['rating']}</p>
-                        <p style="text-align: justify;"><strong>Description:</strong> {row['description']}</p>
-                    </div>
-                    """,
-                unsafe_allow_html=True
-                )
-
-            # for i, rec_title in enumerate(recommendations, 1):
-            #     with st.expander(f"{i}. {rec_title}"):
-            #         rec_details_df = full_df[full_df['title'] == rec_title][columns_to_show]
-            #         if not rec_details_df.empty:
-            #             st.dataframe(rec_details_df, use_container_width=True)
-            #         else:
-            #             st.warning(f"Details for '{rec_title}' not found.")
+                with st.expander(f"🎬 {row['title']}"):
+                    st.markdown(f"""
+                    Genre: {row['listed_in']}  
+                    Rating: {row['rating']}  
+                    Description: {row['description']}
+                    """)
         else:
             st.error("❌ Movie title not found in model title list.")
 
