@@ -76,8 +76,13 @@ def main():
                 indices,
                 full_df
             )
-            st.table(recommendations)
-
+            for _, row in recommendations.iterrows():
+                with st.expander(f"🎬 {row['title']}"):
+                    st.markdown(f"""
+                    Genre: {row['listed_in']}  
+                    Rating: {row['rating']}  
+                    {row['description']}
+                    """)
             # for i, rec_title in enumerate(recommendations, 1):
             #     with st.expander(f"{i}. {rec_title}"):
             #         rec_details_df = full_df[full_df['title'] == rec_title][columns_to_show]
