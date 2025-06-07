@@ -81,7 +81,7 @@ def main():
                     st.markdown(f"""
                     Genre: {row['listed_in']}  
                     Rating: {row['rating']}  
-                    {row['description']}
+                    Description: {row['description']}
                     """)
             # for i, rec_title in enumerate(recommendations, 1):
             #     with st.expander(f"{i}. {rec_title}"):
