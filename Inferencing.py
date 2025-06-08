@@ -55,10 +55,10 @@ def main():
     title = user_input.title() # untuk memastikan input-an dari user selalu diawali dengan huruf kapital, sekalipun dengan 2 kata.
     search_clicked = st.button("Get Recommended Movies")
 
-
     if search_clicked and title:
         # Cek apakah title ada di netflix_title_series
         if title in set(netflix_title_series):
+            
             # Ambil detail dari full_df
             movie_details_df = full_df[full_df['title'] == title][columns_to_show]
             if movie_details_df.empty:
