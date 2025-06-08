@@ -52,7 +52,7 @@ def main():
     st.markdown("Enter a Netflix movie title below to get similar movie recommendations.")
 
     user_input = st.text_input("Enter a movie title:")
-    title = user_input.title() 
+    title = user_input.title() # untuk memastikan input-an dari user selalu diawali dengan huruf kapital, sekalipun dengan 2 kata.
     search_clicked = st.button("Get Recommended Movies")
 
 
@@ -83,7 +83,7 @@ def main():
                     Description: {row['description']}
                     """)
         else:
-            st.error("❌ Movie title not found in model title list.")
+            st.error("Movie title not found in model title list.")
 
 if __name__ == "__main__":
     main()
