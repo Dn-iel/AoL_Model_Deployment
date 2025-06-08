@@ -51,8 +51,10 @@ def main():
     st.title("Netflix Movie Recommender")
     st.markdown("Enter a Netflix movie title below to get similar movie recommendations.")
 
-    title = st.text_input("Enter a movie title:")
+    user_input = st.text_input("Enter a movie title:")
+    title = user_input.title() 
     search_clicked = st.button("Get Recommended Movies")
+
 
     if search_clicked and title:
         # Cek apakah title ada di netflix_title_series
