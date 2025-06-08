@@ -42,7 +42,7 @@ columns_to_show = ['title', 'listed_in', 'description', 'rating']
 def main():
     # Load model dan data
     model_data = load_model_from_drive()
-    netflix_title_series = model_data["netflix_title"]  # Series of titles
+    netflix_title_series = model_data["netflix_title"] 
     cosine_similarities = model_data["cosine_similarities"]
     indices = model_data["indices"]
 
