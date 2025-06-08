@@ -30,7 +30,7 @@ def content_recommender(title, cosine_similarities, indices, df, top_n=5):
     idx = indices[title]
     sim_scores = list(enumerate(cosine_similarities[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:top_n + 1]  # Skip movie itu sendiri
+    sim_scores = sim_scores[1:top_n + 1]
 
     recommended_indices = [i[0] for i in sim_scores]
     displayed_column = ['title', 'listed_in', 'description', 'rating']
